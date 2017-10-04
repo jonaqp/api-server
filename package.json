@@ -1,0 +1,17 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "A modular authenticated graphQL api server",
+  "main": "app.js",
+  "repository": "https://github.com/phytertek/api-server.git",
+  "author": "phytertek <ryan.phytertek@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "sudo mongod --dbpath data"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.1"
+  }
+}
