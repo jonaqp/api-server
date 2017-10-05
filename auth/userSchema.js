@@ -1,25 +1,4 @@
-/**
- * Mongoose schema declaration file
- * 
- * Used to allow multiple components to add to Schema build object
- * 
- * !!!!! THIS DOES NOT CHECK FOR DUPLICATE VALUES IN IMPORTED SCHEMA, LAST IN LINE WINS !!!!!
- */
-
-const authUser = require('../auth/userSchema');
-module.exports = {
-  User: [
-    authUser
-  ]
-};
-
-
-/**
-* 
-
-*** Sample Schema ***
-
-const { hashPassword, comparePassword } = require('./bcrypt');
+const { hashPassword, comparePassword } = require('./utils/bcrypt');
 
 const UserSchema = {
   username: {
@@ -27,9 +6,10 @@ const UserSchema = {
     required: true,
     unique: true
   },
-  passwordHash: {
+  password: {
     type: String
-  }
+  },
+  activeTokens: [ String ]
 };
 
 
@@ -38,8 +18,8 @@ const UserHooks = (Schema) => {
   Schema.pre('save', async function handlePasswordHash(next) {
     try {
       const user = this;
-      if (!user.isModified('passwordHash')) return next();
-      user.passwordHash = await hashPassword(user.passwordHash);
+      if (!user.isModified('password')) return next();
+      user.password = await hashPassword(user.password);
       next();
     } catch (error) {
       next(error);
@@ -50,7 +30,7 @@ const UserHooks = (Schema) => {
 const UserMethods = (Schema) => {
   Schema.methods.checkPassword = async function checkpassword(password) {
     try {
-      const match = await comparePassword(password, this.passwordHash);
+      const match = await comparePassword(password, this.password);
       return match;
     } catch (error) {
       throw new Error(error);
@@ -64,5 +44,3 @@ module.exports = {
   Hooks: UserHooks,
   Methods: UserMethods
 };
-
-*/

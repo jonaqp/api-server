@@ -5,5 +5,5 @@ module.exports = {
   DBNAME: process.env.DBNAME || 'api-server-devtest',
   DBURI: process.env.DBURI || 'mongodb://localhost/api-server-devtest',
   JWT: process.env.JWT || 'a super secret JWT secret',
-  AUTHCOST: process.env.AUTHCOST || 15
+  AUTHCOST: process.env.AUTHCOST || 11
 }
