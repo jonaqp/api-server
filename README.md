@@ -42,7 +42,7 @@
 
 * * *
 
-    const Types = require('../mongo').Types;
+    const { SchemaTypes } = require('../mongo').utils;
 
     const PostSchema = {
       title: {
@@ -53,7 +53,7 @@
         type: String
       }
       comments: [{
-        type: Types.ObjectId,
+        type: SchemaTypes.ObjectId,
         ref: 'Comment'
       }]
     };

@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 // build the model
 const globalModel = require('./buildModel');
 
+// add mongoose utilities to globalModel
+globalModel.utils = {
+  SchemaTypes: mongoose.Schema.Types
+}
+
 // configure database connection
 const { DBNAME, DBURI } = require('../config')
 mongoose.Promise = global.Promise;
