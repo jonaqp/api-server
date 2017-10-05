@@ -13,6 +13,8 @@
     in a single location
   * All models compiled at startup and exported from 
     single location
+  * Exports single global model object containing all schema
+    and database utilities
 
 
 ### Auth (bcrypt & jwt)
