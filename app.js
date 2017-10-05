@@ -2,21 +2,25 @@
 require('./mongo');
 
 // Server Component
-const server = require('./server');
+const Server = require('./server').Server;
 const { HOST, PORT, NAME } = require('./config');
 
 // Auth Component
 const authRoutes = require('./auth/routes');
 const { authorizeRoute } = require('./auth/services')
-server.use('/auth', authRoutes);
+Server.use('/auth', authRoutes);
+
+// User Component
+const userRoutes = require('./user/routes');
+Server.use('/user', authorizeRoute, userRoutes);
 
 // Handle unspecified routes
-server.use((req, res) => res.status(404).json({
+Server.use((req, res) => res.status(404).json({
   error: `Unable to resolve ${req.originalUrl}`
 }));
 
 // Start App
-server.listen(PORT, () => {
+Server.listen(PORT, () => {
   // TODO: Add logger
   console.log(`${NAME} running at ${HOST}:${PORT} `)
 });

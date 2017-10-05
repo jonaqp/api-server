@@ -15,5 +15,13 @@ module.exports = {
     } catch (error) {
       sendUserError(error, res)
     }
+  },
+  decodeToken: async (token) => {
+    try {
+      const decoded = await decode(token);
+      return decoded
+    } catch (error) {
+      throwError(error);
+    }
   }
 }
