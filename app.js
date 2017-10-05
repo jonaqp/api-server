@@ -1,4 +1,5 @@
 const server = require('./server');
+require('./mongo');
 const { HOST, PORT, NAME } = require('./config');
 
 server.listen(PORT, () => {
