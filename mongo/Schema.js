@@ -8,6 +8,7 @@
 
 const authUser = require('../auth/userSchema');
 const userSchema = require('../user/userSchema');
+
 const GlobalSchema = {
   User: [
     authUser,
