@@ -100,9 +100,8 @@
 * Schema
   * User: { username, password, activeTokens }
 
-
+* * *
 > #### Mongo Schema Declaration Example
-
 #### posts/postSchema.js
 
 * * *
