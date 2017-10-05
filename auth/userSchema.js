@@ -22,7 +22,7 @@ const UserHooks = (Schema) => {
       user.password = await hashPassword(user.password);
       next();
     } catch (error) {
-      next(error);
+      throw new Error(error);
     }
   })
 }
@@ -36,7 +36,6 @@ const UserMethods = (Schema) => {
       throw new Error(error);
     }
   }
-  return Schema;
 }
 
 module.exports = {
