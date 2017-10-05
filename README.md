@@ -81,7 +81,7 @@
 
 
 > ### Auth (bcrypt & jwt)
-* Routes ~ /auth/
+* Routes ~ /auth
     * POST /register: 
       * accepts { username, password }
       * creates new User
@@ -99,6 +99,20 @@
   * authorizeRoute: route authorization middleware
 * Schema
   * User: { username, password, activeTokens }
+
+
+> ### User (api component)
+* Routes ~ authorized ~ /user
+  * POST /update:
+    * accepts { firstName, lastName, email }
+    * gets user id from decoded token, updates user with info from
+      request body
+    * returns user id if successful
+  * GET /get-all:
+    * gets all users from database
+    * returns all users
+* Schema
+  * User: { firstName, lastName, email }
 
 * * *
 > #### Mongo Schema Declaration Example
