@@ -1,9 +1,14 @@
 const express = require('express');
 
-const server = express();
+const Server = express();
 
-require('./middleware/bodyParser')(server);
+const Router = express.Router
 
-require('./middleware/cors')(server);
+require('./middleware/bodyParser')(Server);
 
-module.exports = server;
+require('./middleware/cors')(Server);
+
+module.exports = {
+  Server,
+  Router
+};
