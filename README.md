@@ -1,14 +1,77 @@
 # API-Server
+>>> an opinionated, declarative, component approach to builing api's
+* * *
 
+## Overview
+
+> The goal of this project is to create a solid baseline 
+> api server based on node, express, and mongo
+>  with json web token authentication.
+* // TODO: Add GraphQL
+* * *
+
+## Architecture
+
+>> Components are composed of:
+>> * a route controller
+>> * a router (exported, declared in global app)
+>> * services (exported, component methods)
+>> * schema (exported, declared in the global schema)
+>> * utils (methods used internally by the component)
+>> * tests
+
+>> To declare a component:
+>> 1. import the route into app,js, add with root route
+>>    * `const componentRoutes = require('./component/routes');`
+>>    * `server.use('/root', componentRoutes);`
+>> 2. import the schema slices into mongo/Schema.js,
+>>    add it to the global model
+>>    * `const componentSchema = require('./component/schema');`
+>>    * `globalModel = {`
+>>    * `Component: [ componentSchema ]`
+>>    * `};`
+
+> ### Structure
+    |-config.js                 // App wide configuration                                       
+    |-app.js                    // Ties everything together
+    |-server
+      |-index.js                // Init's express, adds middleware, exports { server, router }
+      |-utils.js                // exports common server utilities
+      |-middleware
+        |-bodyParser.js         // applies bodyParser                                                // TODO: add to config file
+        |-cors.js               // applies cors                                                      // TODO: add to config file
+      |-test                                                                                         // TODO: add tests
+    |-mongo
+      |-index.js                // Inits mongoose, runs model build, connects db, exports { model }
+      |-Schema.js               // Global Schema -- Import component Schema here --
+      |-buildModel.js           // builds global model from Global Schema
+      |-tests                                                                                        // TODO: add tests
+    |-common
+      |-validation.js           // input validation
+      |-tests                                                                                        // TODO: add tests
+    |-auth
+      |-controllers.js          // route controllers for authentication component
+      |-routes.js               // exports authentication routes 
+      |-services.js             // exports authentication services { authorizeRoute, decodeToken }
+      |-userSchema.js           // exports authentication user schema slice
+      |-utils
+        |-jwt.js                // jwt utility functions { encrypt, decrypt }
+        |-bcrypt.js             // bcrypt utility functions { hashPassword, comparePassword }
+      |-tests                                                                                        // TODO: add tests
+    |-user
+      |-controllers.js          // route controllers for user component
+      |-routes.js               // exports user routes
+      |-userSchema.js           // exports user schema slice
+      |-tests                                                                                        // TODO: add tests
 ## Components
-### Server (Express)
+> ### Server (Express)
 * Middleware
   * body-parser
   * cors
 
 
-### Mongo (Mongoose)
-* Master Schema (/mongo/Schema.js)
+> ### Mongo (Mongoose)
+* [Master Schema] [masterSchema] ref link ?e
   * Declaratively build your entire app database schema 
     in a single location
   * All models compiled at startup and exported from 
@@ -17,7 +80,7 @@
     and database utilities
 
 
-### Auth (bcrypt & jwt)
+> ### Auth (bcrypt & jwt)
 * Routes ~ /auth/
     * POST /register: 
       * accepts { username, password }
@@ -38,7 +101,7 @@
   * User: { username, password, activeTokens }
 
 
-#### Mongo Schema Declaration Example
+> #### Mongo Schema Declaration Example
 
 #### posts/postSchema.js
 
@@ -118,6 +181,4 @@
     module.exports = GlobalSchema;
 
 * * *
-
-
 
