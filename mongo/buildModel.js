@@ -1,23 +1,12 @@
 const mongoose = require('mongoose');
-
-const db = require('./Schema');
-
-const dbModel = {};
-
-Object.keys(db).forEach(Model => {
-  // Combine schemas
-  const SchemaEntries = db[Model].reduce((r, e) => ({ ...r, ...e.Schema }), {})
-  // Create new mongoose schema from result
+const GlobalSchema = require('./Schema');
+module.exports = Object.keys(GlobalSchema).reduce((DB, Model) => {
+  const SchemaEntries = GlobalSchema[Model].reduce((r, e) => ({ ...r, ...e.Schema }), {})
   const ModelSchema = new mongoose.Schema(SchemaEntries);
-
-  db[Model].forEach(e => {
-    // Run hook setters
+  GlobalSchema[Model].forEach(e => {
     e.Hooks(ModelSchema)
-    // Run method setters
     e.Methods(ModelSchema)
   });
-
-  dbModel[Model] = mongoose.model(Model, ModelSchema)
-});
-
-module.exports = dbModel;
+  DB[Model] = mongoose.model(Model, ModelSchema)
+  return DB
+}, {});
